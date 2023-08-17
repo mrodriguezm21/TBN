@@ -1,0 +1,19 @@
+{
+  "name": "tbn",
+  "version": "1.0.0",
+  "description": "Prueba tecnica The Biz Nation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrodriguezm21/TBN.git"
+  },
+  "author": "Mario Rodriguez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrodriguezm21/TBN/issues"
+  },
+  "homepage": "https://github.com/mrodriguezm21/TBN#readme"
+}

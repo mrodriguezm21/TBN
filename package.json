@@ -4,7 +4,8 @@
   "description": "Prueba tecnica The Biz Nation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/mrodriguezm21/TBN/issues"
   },
-  "homepage": "https://github.com/mrodriguezm21/TBN#readme"
+  "homepage": "https://github.com/mrodriguezm21/TBN#readme",
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.9.2"
+  }
 }

@@ -1,5 +1,6 @@
 const boom = require("@hapi/boom");
 const { models } = require("../libs/sequelize");
+const { Op } = require("sequelize");
 
 const addCharacter = async (data) => {
   const newCharacter = await models.Character.create(data);
@@ -8,12 +9,29 @@ const addCharacter = async (data) => {
   }
   return newCharacter;
 };
-const getCharacters = async () => {
-  const characters = await models.Character.findAll();
+const getCharacters = async (filter) => {
+  const whereClause = {};
+
+  if (filter.age) {
+    whereClause.age = filter.age;
+  }
+  if (filter.name) {
+    whereClause.name = { [Op.like]: `%${filter.name}%` };
+  }
+
+  const attributes = ["id", "name", "image"];
+  const characters = await models.Character.findAll({
+    where: whereClause,
+    attributes: attributes,
+  });
+
   return characters;
 };
 const getCharacter = async (id) => {
-  const character = await models.Character.findByPk(id);
+  const attributesToExclude = ["created_at", "updated_at", "deleted_at"];
+  const character = await models.Character.findByPk(id, {
+    attributes: { exclude: attributesToExclude },
+  });
   if (!character) {
     throw boom.notFound("Character not found");
   }

@@ -9,8 +9,9 @@ const {
 } = require("../schemas/characters.schema");
 
 router.get("/", async (req, res) => {
+  const filter = req.query || {};
   try {
-    const characters = await characterService.list();
+    const characters = await characterService.list(filter);
     response.success(req, res, characters, 200);
   } catch (error) {
     response.error(req, res, "Unexpected Error", error, 500);

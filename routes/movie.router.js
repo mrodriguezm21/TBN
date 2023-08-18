@@ -9,8 +9,9 @@ const {
 } = require("../schemas/movies.schema");
 
 router.get("/", async (req, res) => {
+  const filter = req.query || {};
   try {
-    const characters = await movieService.list();
+    const characters = await movieService.list(filter);
     response.success(req, res, characters, 200);
   } catch (error) {
     response.error(req, res, "Unexpected Error", error, 500);

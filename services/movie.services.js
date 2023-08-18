@@ -1,5 +1,6 @@
 const boom = require("@hapi/boom");
 const { models } = require("../libs/sequelize");
+const { Op } = require("sequelize");
 
 const addMovie = async (data) => {
   const newMovie = await models.Movie.create(data);
@@ -8,12 +9,24 @@ const addMovie = async (data) => {
   }
   return newMovie;
 };
-const getMovies = async () => {
-  const movies = await models.Movie.findAll();
+const getMovies = async (filter) => {
+  const whereClause = {};
+
+  if (filter.name) {
+    whereClause.title = { [Op.like]: `%${filter.name}%` };
+  }
+  const attributes = ["id", "image", "title", "releaseYear"];
+  const movies = await models.Movie.findAll({
+    where: whereClause,
+    attributes: attributes,
+  });
   return movies;
 };
 const getMovie = async (id) => {
-  const movie = await models.Movie.findByPk(id);
+  const attributesToExclude = ["created_at", "updated_at", "deleted_at"];
+  const movie = await models.Movie.findByPk(id, {
+    attributes: { exclude: attributesToExclude },
+  });
   if (!movie) {
     throw boom.notFound("Movie not found");
   }

@@ -29,11 +29,6 @@ const CharacterSchema = {
     allowNull: true,
     type: DataTypes.STRING(255),
   },
-  deletedAt: {
-    allowNull: true,
-    type: DataTypes.DATE,
-    field: "deleted_at",
-  },
 };
 
 class Character extends Model {

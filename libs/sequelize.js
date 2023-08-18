@@ -14,6 +14,6 @@ const db = new Sequelize(URI, {
 
 setUpModels(db);
 
-db.sync({ alter: true, force: true }).then(() => {});
+db.sync({ alter: true }).then(() => {});
 
 module.exports = db;

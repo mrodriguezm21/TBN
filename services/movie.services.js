@@ -11,14 +11,19 @@ const addMovie = async (data) => {
 };
 const getMovies = async (filter) => {
   const whereClause = {};
+  const orderBy = [];
 
   if (filter.name) {
     whereClause.title = { [Op.like]: `%${filter.name}%` };
+  } else if (filter.genre) {
+  } else if (filter.order) {
+    orderBy.push(["releaseYear", filter.order || "ASC"]);
   }
   const attributes = ["id", "image", "title", "releaseYear"];
   const movies = await models.Movie.findAll({
     where: whereClause,
     attributes: attributes,
+    order: orderBy,
   });
   return movies;
 };

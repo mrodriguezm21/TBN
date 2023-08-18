@@ -22,6 +22,10 @@ const MovieSchema = {
     type: DataTypes.INTEGER,
     field: "release_year",
   },
+  rating: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
 };
 
 class Movie extends Model {

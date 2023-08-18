@@ -1,65 +1,47 @@
 const boom = require("@hapi/boom");
+const { models } = require("../libs/sequelize");
 
-const addCharacter = async (character) => {
-//   const { nombre, edad, peso, historia } = character;
-//   if (!nombre || !edad || !peso || !historia) {
-//     throw boom.badRequest("Missing fields");
-//   }
-  const newCharacter = { ...character, createdAt: new Date() };
-
-  try {
-    return newCharacter;
-  } catch (error) {
-    throw boom.badImplementation("Unexpected error");
+const addCharacter = async (data) => {
+  const newCharacter = await models.Character.create(data);
+  if (!newCharacter) {
+    throw boom.badImplementation("Error creating character");
   }
+  return newCharacter;
 };
-
 const getCharacters = async () => {
-  let characters = [
-    { nombre: "Pedro", edad: 20, peso: 80, historia: "Historia 1" },
-    { nombre: "Juan", edad: 20, peso: 80, historia: "Historia 2" },
-    { nombre: "Pablo", edad: 20, peso: 80, historia: "Historia 3" },
-  ];
-  try {
-    return characters;
-  } catch (error) {
-    throw boom.badImplementation("Unexpected error");
-  }
+  const characters = await models.Character.findAll();
+  return characters;
 };
 const getCharacter = async (id) => {
-  let character = {
-    nombre: "Pedro",
-    edad: 20,
-    peso: 80,
-    historia: "Historia 1",
-  };
-  try {
-    return character;
-  } catch (error) {
+  const character = await models.Character.findByPk(id);
+  if (!character) {
     throw boom.notFound("Character not found");
   }
+  return character;
 };
 
-const updateSerie = async (id, character) => {
-  try {
-    return { nombre: "Pedro", edad: 20, peso: 80, historia: "Historia 2" };
-  } catch (error) {
+const updateCharacter = async (id, changes) => {
+  const character = await models.Character.findByPk(id);
+  if (!character) {
     throw boom.notFound("Character not found");
   }
+  const updatedCharacter = await character.update(changes);
+  return updatedCharacter;
 };
 
 const deleteCharacter = async (id) => {
-  try {
-    return { message: "Character deleted" };
-  } catch (error) {
+  const character = await models.Character.findByPk(id);
+  if (!character) {
     throw boom.notFound("Character not found");
   }
+  await character.destroy();
+  return { message: "Character deleted" };
 };
 
 module.exports = {
   create: addCharacter,
   list: getCharacters,
   listOne: getCharacter,
-  update: updateSerie,
+  update: updateCharacter,
   delete: deleteCharacter,
 };

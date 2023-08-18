@@ -12,9 +12,6 @@ const createCharacterSchema = Joi.object({
     weight: weight.required(),
     story: story.required(),
 });
-// const updateCharacterSchema = Joi.object({
-//     id: id.required(),
-// });
 
 const getCharacterSchema = Joi.object({
     id: id.required(),

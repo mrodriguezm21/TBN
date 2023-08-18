@@ -9,10 +9,6 @@ const {
 } = require("../schemas/characters.schema");
 
 router.get("/", async (req, res) => {
-  // res.json({
-  //     message: "Personajes"
-  // });
-
   try {
     const characters = await characterService.list();
     response.success(req, res, characters, 200);
@@ -21,42 +17,50 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", validatorHandler(getCharacterSchema,'params'), async (req, res) => {
-  try {
-    const { id } = req.params;
-    const character = await characterService.listOne(id);
-    response.success(req, res, character, 200);
-  } catch (error) {
-    response.error(req, res, "Unexpected Error", error, 500);
+router.get(
+  "/:id",
+  validatorHandler(getCharacterSchema, "params"),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const character = await characterService.listOne(id);
+      response.success(req, res, character, 200);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.post("/", validatorHandler(createCharacterSchema, 'body'),async (req, res, next) => {
-  try {
-    const character = await characterService.create(req.body);
-    response.success(req, res, character, 201);
-  } catch (error) {
-    next(error);
+router.post(
+  "/",
+  validatorHandler(createCharacterSchema, "body"),
+  async (req, res, next) => {
+    try {
+      const character = await characterService.create(req.body);
+      response.success(req, res, character, 201);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const character = await characterService.update(id, req.body);
     response.success(req, res, character, 200);
   } catch (error) {
-    response.error(req, res, "Unexpected Error", error, 500);
+    next(error);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const character = await characterService.delete(id);
     response.success(req, res, character, 204);
   } catch (error) {
-    response.error(req, res, "Unexpected Error", error, 500);
+    next(error);
   }
 });
 

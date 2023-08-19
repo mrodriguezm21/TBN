@@ -10,7 +10,6 @@ const addCharacter = async (data) => {
   return newCharacter;
 };
 const getCharacters = async (filter) => {
-  console.log(filter);
   const whereClause = {};
 
   if (filter.age) {
@@ -29,7 +28,6 @@ const getCharacters = async (filter) => {
     attributes: attributes,
   });
 
-  console.log(characters);
   return characters;
 };
 const getCharacter = async (id) => {

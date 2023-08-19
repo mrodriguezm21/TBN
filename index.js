@@ -1,5 +1,12 @@
 const cors = require("cors");
+const express = require("express");
+
+const app = express();
+
 require("./utils/auth/index")
+const swaggerDocs = require("./swagger/swaggerDef");
+const routerApi = require("./routes");
+const config = require("./config");
 
 const {
   logErrors,
@@ -8,11 +15,6 @@ const {
   ormErrorHandler
 } = require("./middlewares/error.handler");
 
-const express = require("express");
-const routerApi = require("./routes");
-
-const app = express();
-const config = require("./config");
 
 app.use(express.json());
 app.use(cors());
@@ -25,4 +27,5 @@ app.use(errorHandler);
 
 app.listen(config.port, () => {
   console.log(`Server is running on ${config.host}:${config.port}`);
+  swaggerDocs(app, config.port);
 });

@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const response = require("./response");
-const movieService = require("../services/movie.services");
+
+const passport = require("passport");
 const validatorHandler = require("../middlewares/validator.handler");
 const {
   createMovieSchema,
   getMovieSchema,
 } = require("../schemas/movies.schema");
+
+const response = require("./response");
+
+const movieService = require("../services/movie.services");
 
 router.get("/", async (req, res) => {
   const filter = req.query || {};
@@ -34,6 +38,7 @@ router.get(
 
 router.post(
   "/",
+  passport.authenticate("jwt", { session: false }),
   validatorHandler(createMovieSchema, "body"),
   async (req, res, next) => {
     try {
@@ -45,24 +50,32 @@ router.post(
   }
 );
 
-router.patch("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const character = await movieService.update(id, req.body);
-    response.success(req, res, character, 200);
-  } catch (error) {
-    next(error);
+router.patch(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const character = await movieService.update(id, req.body);
+      response.success(req, res, character, 200);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.delete("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const character = await movieService.delete(id);
-    response.success(req, res, character, 204);
-  } catch (error) {
-    next(error);
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const character = await movieService.delete(id);
+      response.success(req, res, character, 204);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;

@@ -29,6 +29,7 @@ const getCharacters = async (filter) => {
     attributes: attributes,
   });
 
+  console.log(characters);
   return characters;
 };
 const getCharacter = async (id) => {

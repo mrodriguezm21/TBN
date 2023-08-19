@@ -1,7 +1,7 @@
 "use strict";
 
 const { GENRE_TABLE } = require("../models/genre.model");
-const genres = require("../../utils/genre.seeders")
+const genres = require("../../utils/db/genre.seeders")
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

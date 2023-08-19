@@ -1,4 +1,5 @@
 const cors = require("cors");
+require("./utils/auth/index")
 
 const {
   logErrors,

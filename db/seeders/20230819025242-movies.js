@@ -1,6 +1,6 @@
 'use strict';
 const { MOVIE_TABLE } = require("../models/movie.model");
-const movies = require("../../utils/movie.seeders")
+const movies = require("../../utils/db/movie.seeders")
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

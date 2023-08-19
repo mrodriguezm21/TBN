@@ -1,7 +1,7 @@
 "use strict";
 
 const { CHARACTER_TABLE } = require("../models/character.model");
-const characters = require("../../utils/character.seeders");
+const characters = require("../../utils/db/character.seeders");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

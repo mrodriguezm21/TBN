@@ -5,12 +5,14 @@ const title = Joi.string().alphanum().min(3).max(110).pattern(/^[\w\s\p{P}]+$/);
 const releaseYear = Joi.number().integer().min(1895).max(3000);
 const rating = Joi.number().min(1).max(5);
 const genreId = Joi.number().integer();
+const image = Joi.string().uri();
 
 const createMovieSchema = Joi.object({
   title: title.required(),
   releaseYear: releaseYear.required(),
   rating: rating.required(),
   genreId: genreId.required(),
+  image: image.required(),
 });
 
 const getMovieSchema = Joi.object({

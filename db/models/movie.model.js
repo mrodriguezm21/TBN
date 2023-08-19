@@ -22,12 +22,12 @@ const MovieSchema = {
   },
   releaseYear: {
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING(4),
     field: "release_year",
   },
   rating: {
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
   },
   createdAt: {
     allowNull: true,

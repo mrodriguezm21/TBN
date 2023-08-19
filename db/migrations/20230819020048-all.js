@@ -17,7 +17,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable(CHARACTER_TABLE);
     await queryInterface.dropTable(MOVIE_TABLE);
-    await queryInterface.createTable(GENRE_TABLE, GenreSchema);
+    await queryInterface.dropTable(GENRE_TABLE); 
     // await queryInterface.dropTable(MOVIE_CHARACTER_TABLE);
   }
 };

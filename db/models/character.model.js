@@ -1,4 +1,5 @@
-const { Model, DataTypes, Sequelize, Op } = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
+const { MOVIE_TABLE } = require("./movie.model");
 
 const CHARACTER_TABLE = "characters";
 
@@ -29,21 +30,53 @@ const CharacterSchema = {
     allowNull: true,
     type: DataTypes.STRING(255),
   },
+  createdAt: {
+    allowNull: true,
+    type: DataTypes.DATE,
+    field: "created_at",
+  },
+  updatedAt: {
+    allowNull: true,
+    type: DataTypes.DATE,
+    field: "updated_at",
+  },
+  deletedAt: {
+    allowNull: true,
+    type: DataTypes.DATE,
+    field: "deleted_at",
+  },
+
+  movieId: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: MOVIE_TABLE,
+      key: "id",
+    },
+    field: "movie_id",
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  },
 };
 
 class Character extends Model {
   static associate(models) {
-    // define association here
+    this.belongsTo(models.Movie, { as: "movie" });
+
+    // this.belongsToMany(models.Movie, {
+    //   as: "actors",
+    //   through: models.MovieCharacter,
+    //   foreignKey: "characterId",
+    //   otherKey: "movieId",
+    // })
   }
   static config(sequelize) {
     return {
       sequelize,
       tableName: CHARACTER_TABLE,
       modelName: "Character",
+      timestamps: true,
       paranoid: true,
-      createdAt: "created_at",
-      updatedAt: "updated_at",
-      deletedAt: "deleted_at",
     };
   }
 }

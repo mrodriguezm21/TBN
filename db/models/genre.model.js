@@ -21,7 +21,7 @@ const GenreSchema = {
 
 class Genre extends Model {
   static associate(models) {
-    // define association here
+    this.hasMany(models.Movie, {as : "movies", foreignKey: "genreId"});
   }
   static config(sequelize) {
     return {

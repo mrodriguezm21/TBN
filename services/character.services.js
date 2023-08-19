@@ -10,6 +10,7 @@ const addCharacter = async (data) => {
   return newCharacter;
 };
 const getCharacters = async (filter) => {
+  console.log(filter);
   const whereClause = {};
 
   if (filter.age) {
@@ -17,6 +18,9 @@ const getCharacters = async (filter) => {
   }
   if (filter.name) {
     whereClause.name = { [Op.like]: `%${filter.name}%` };
+  }
+  if (filter.movies) {
+    whereClause.movieId = filter.movies;
   }
 
   const attributes = ["id", "name", "image"];
@@ -28,9 +32,10 @@ const getCharacters = async (filter) => {
   return characters;
 };
 const getCharacter = async (id) => {
-  const attributesToExclude = ["created_at", "updated_at", "deleted_at"];
+  const attributesToExclude = ["createdAt", "updatedAt", "deletedAt"];
   const character = await models.Character.findByPk(id, {
     attributes: { exclude: attributesToExclude },
+    include: { association: "movie", attributes: ["id", "title"] },
   });
   if (!character) {
     throw boom.notFound("Character not found");

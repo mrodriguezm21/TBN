@@ -1,10 +1,10 @@
-require("dotenv").config();
 const cors = require("cors");
 
 const {
   logErrors,
   errorHandler,
   boomErrorHandler,
+  ormErrorHandler
 } = require("./middlewares/error.handler");
 
 const express = require("express");
@@ -18,6 +18,7 @@ app.use(cors());
 
 routerApi(app);
 app.use(logErrors);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 

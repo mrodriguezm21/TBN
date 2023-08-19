@@ -4,7 +4,7 @@ const USER = encodeURIComponent(config.db_username);
 const PASSWORD = encodeURIComponent(config.db_password);
 
 
-const URI = `mariadb://${USER}:${PASSWORD}@${config.db_host}:${config.db_port}/prueba122`;
+const URI = `mariadb://${USER}:${PASSWORD}@${config.db_host}:${config.db_port}/${config.db_name}`;
 
 module.exports = {
   development: {
